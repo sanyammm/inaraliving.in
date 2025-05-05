@@ -1,0 +1,8 @@
+# Allow all crawlers to index the main site
+User-agent: *
+Disallow: /admin/
+Disallow: /private/
+Allow: /
+
+# Sitemap location
+Sitemap: https://inaraliving.in/sitemap.xml

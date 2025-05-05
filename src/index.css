@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+@keyframes underlineAnimation {
+  0% {
+    width: 0;
+    left: 50%; /* Start from the middle */
+  }
+  50% {
+    width: 100%; /* Expand to full width */
+    left: 0; /* Move to the left edge */
+  }
+  100% {
+    width: 0;
+    left: 50%; /* Return to the middle */
+  }
+}
+
+@layer utilities {
+  .animate-fadeInUp {
+    animation: fadeInUp 1s forwards;
+  }
+
+  .animate-fadeInRight {
+    animation: fadeInRight 1s forwards;
+  }
+
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInRight {
+    0% {
+      opacity: 0;
+      transform: translateX(40px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+}
+
+/* Marquee Animation */
+.marquee {
+  width: 100%;
+  animation: marquee 25s linear infinite;
+  white-space: nowrap;
+}
+
+.marquee-content {
+  display: flex;
+  width: max-content;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Smooth scrolling for mobile */
+@media (max-width: 640px) {
+  .marquee {
+    will-change: transform;
+  }
+}
+.underline-effect {
+  position: relative;
+  display: inline-block;
+}
+
+/* Add to your stylesheet */
+.hover\:scale-\[1\.02\]:hover {
+  transform: scale(1.02);
+}
+.border-\[#D4AF37\]\/70 {
+  border-color: rgba(212, 175, 55, 0.7);
+}
+
+.underline-effect::after {
+  content: "";
+  position: absolute;
+  left: 50%; /* Start from the middle */
+  bottom: -2px; /* Adjust this value to position the underline */
+  width: 0;
+  height: 2px; /* Thickness of the underline */
+  background-color: #ec4899; /* Color of the underline */
+  animation: underlineAnimation 8s infinite; /* Adjust the duration as needed */
+}
+
+/* Add this to your global CSS file */
+.no-scroll {
+  overflow: hidden;
+}
