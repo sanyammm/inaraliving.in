@@ -79,7 +79,7 @@ export default function HeroSection() {
   ];
 
   return (
-    <div className="relative w-full h-[70vh] sm:h-screen overflow-hidden">
+    <div className="relative w-full h-[90vh] sm:h-screen overflow-hidden">
       {/* Background image with overlay */}
       <div className="absolute inset-0 w-full h-full">
         <img
@@ -226,7 +226,7 @@ export default function HeroSection() {
           </div>
         </div>
       </div>
-
+ 
       {/* Dots Slider */}
       <div className="absolute bottom-14 sm:bottom-16 left-0 right-0 flex justify-center gap-2 z-0">
         {slides.map((_, idx) => (
