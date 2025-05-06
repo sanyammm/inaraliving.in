@@ -11,7 +11,7 @@ export function HomePage() {
       {/* Hero Section */}
       <HeroSection />
       {/* Community Living Section */}
-      <div className="flex flex-col-reverse sm:flex-row items-center gap-10 ">
+      <div className="flex flex-col-reverse sm:flex-row items-center gap-10 px-6">
         <div className="sm:w-1/2 text-center sm:text-left">
           <h2 className="text-3xl sm:text-4xl font-bold text-[#1f4e5f] mb-6">
             Your{" "}

@@ -43,11 +43,14 @@ export function Layout({ children }: LayoutProps) {
     };
   }, []);
 
+  // Check if it's the homepage or not
+  const isHomepage = location.pathname === "/";
+
   return (
     <div className="min-h-screen bg-gray-50">
       {!isAdmin && (
         <nav className="bg-white shadow-sm fixed w-full z-10">
-          <div className="mx-auto px-4 sm:px-6 lg:px-8"> {/*max-w-7xl to make the left right margin*/}
+          <div className="mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between h-16 items-center">
               {/* Left Section - Logo */}
               <div className="flex items-center">
@@ -84,7 +87,7 @@ export function Layout({ children }: LayoutProps) {
 
               {/* Desktop Navigation Links */}
               <div className="hidden md:flex md:items-center md:space-x-10">
-                {[
+                {[ 
                   {
                     path: "/rooms",
                     label: "Rooms",
@@ -146,7 +149,7 @@ export function Layout({ children }: LayoutProps) {
               }`}
             >
               <div className="flex flex-col space-y-3 p-4">
-                {[
+                {[ 
                   { path: "/rooms", label: "Rooms" },
                   { path: "/pricing", label: "Pricing" },
                   { path: "/communities", label: "Communities" },
@@ -169,8 +172,10 @@ export function Layout({ children }: LayoutProps) {
         </nav>
       )}
 
-      {/* Content Wrapper with Top Padding to Avoid Navbar Overlap */}
-      <main className="mx-auto sm:px-6 lg:px-8 "> {/*max-w-7xl to make the left right margin*/}
+      {/* Content Wrapper with Conditional Top Padding */}
+      <main
+        className={`mx-auto sm:px-6 lg:px-8 ${isHomepage ? "" : "pt-20"}`}
+      >
         {children}
       </main>
     </div>

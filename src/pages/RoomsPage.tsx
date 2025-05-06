@@ -230,7 +230,7 @@ export function RoomsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f9fafb] px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-screen bg-[#f9fafb] px-4 sm:px-6 lg:px-8 py-8 pt-0">
       <div className="max-w-7xl mx-auto">
         {/* Breadcrumb Navigation */}
         <div className="mb-6">
