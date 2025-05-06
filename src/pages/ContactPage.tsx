@@ -61,7 +61,7 @@ export function ContactPage() {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/api/inquiry", {
+      const res = await fetch("https://inaraliving-in.onrender.com/api/inquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, phone: `+91${phone}`, message }), // Include +91 prefix in the payload

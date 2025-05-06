@@ -151,7 +151,7 @@ export function RoomsPage() {
     console.log("Room ID being sent:", selectedRoom?.id);
 
     try {
-      const response = await fetch("http://localhost:5000/api/booking", {
+      const response = await fetch("https://inaraliving-in.onrender.com/api/booking", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

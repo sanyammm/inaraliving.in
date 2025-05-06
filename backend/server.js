@@ -26,7 +26,7 @@ app.use("/api/admin", adminRoutes);
 
 // Base route
 app.get("/", (req, res) => {
-  res.send("Welcome to Inaरa Living API");
+  res.send("Welcome to Inara Living API");
 });
 
 // Start server
