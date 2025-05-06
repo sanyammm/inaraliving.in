@@ -170,7 +170,7 @@ export function Layout({ children }: LayoutProps) {
       )}
 
       {/* Content Wrapper with Top Padding to Avoid Navbar Overlap */}
-      <main className="mx-auto sm:px-6 lg:px-8 pt-20"> {/*max-w-7xl to make the left right margin*/}
+      <main className="mx-auto sm:px-6 lg:px-8 "> {/*max-w-7xl to make the left right margin*/}
         {children}
       </main>
     </div>
