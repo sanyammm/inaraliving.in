@@ -9,7 +9,13 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors()); // Enable CORS
+app.use(cors({
+  origin: 'https://inaraliving.in', // Replace with your frontend domain
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true, // Optional: Only if you're using cookies
+}));
+ // Enable CORS
 app.use(express.json());
 
 // Connect to MongoDB
