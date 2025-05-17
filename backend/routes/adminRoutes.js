@@ -11,6 +11,10 @@ router.post("/login", async (req, res) => {
   try {
     const admin = await Admin.findOne({ email });
 
+    console.log("Admin found:", admin);
+    if (!admin) {
+      return res.status(401).json({ message: "Invalid credentials of admin" });
+    }
     if (!admin || !(await admin.matchPassword(password))) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
