@@ -10,15 +10,18 @@ export function AdminLoginPage() {
   const navigate = useNavigate();
   const { login } = useAuth();
 
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await login(email, password);
+      const response = await login(email, password); // now expects token
+      localStorage.setItem("adminToken", response.token);
       navigate("/admin/dashboard");
     } catch {
       setError("Invalid credentials");
     }
   };
+  
 
   return (
     <div className="h-screen flex items-center justify-center bg-gradient-to-br from-[#f3f4f6] to-[#e5e7eb] px-4">

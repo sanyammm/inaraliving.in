@@ -45,6 +45,7 @@ export function Layout({ children }: LayoutProps) {
 
   // Check if it's the homepage or not
   const isHomepage = location.pathname === "/";
+  const isAdminDashboard = location.pathname === "/admin/dashboard";
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -87,7 +88,7 @@ export function Layout({ children }: LayoutProps) {
 
               {/* Desktop Navigation Links */}
               <div className="hidden md:flex md:items-center md:space-x-10">
-                {[ 
+                {[
                   {
                     path: "/rooms",
                     label: "Rooms",
@@ -149,7 +150,7 @@ export function Layout({ children }: LayoutProps) {
               }`}
             >
               <div className="flex flex-col space-y-3 p-4">
-                {[ 
+                {[
                   { path: "/rooms", label: "Rooms" },
                   { path: "/pricing", label: "Pricing" },
                   { path: "/communities", label: "Communities" },
@@ -174,7 +175,9 @@ export function Layout({ children }: LayoutProps) {
 
       {/* Content Wrapper with Conditional Top Padding */}
       <main
-        className={`mx-auto sm:px-6 lg:px-8 ${isHomepage ? "" : "pt-20"}`}
+        className={`mx-auto sm:px-6 lg:px-8 ${
+          isHomepage || isAdminDashboard ? "" : "pt-20"
+        }`}
       >
         {children}
       </main>

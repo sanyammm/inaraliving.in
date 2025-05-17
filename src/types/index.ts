@@ -19,7 +19,16 @@ export interface Booking {
   status: 'pending' | 'confirmed' | 'cancelled';
 }
 
+// Admin user stored in Zustand after login
 export interface AdminUser {
   email: string;
   isAuthenticated: boolean;
+}
+
+// Server's response to a login request
+export interface LoginResponse {
+  token: string;
+  user: {
+    email: string;
+  };
 }

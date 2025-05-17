@@ -1,7 +1,24 @@
-// Placeholder for admin auth middleware
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config();
+
 const authMiddleware = (req, res, next) => {
-  // Add token validation or admin check logic here
-  next();
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(401).json({ message: "No token provided" });
+  }
+
+  const token = authHeader.split(" ")[1];
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.admin = decoded; // You can access req.admin in controllers if needed
+    next();
+  } catch (err) {
+    res.status(401).json({ message: "Invalid token" });
+  }
 };
 
-export default authMiddleware; // Use ES module default export
+export default authMiddleware;
