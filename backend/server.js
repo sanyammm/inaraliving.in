@@ -8,14 +8,30 @@ dotenv.config();
 // Initialize Express
 const app = express();
 
-// Middleware
+
+// app.use(cors()); 
+//  Enable CORS
+ const allowedOrigins = ['https://inaraliving.in', 'http://localhost:5173']; // Add your allowed origins here
+
 app.use(cors({
-  origin: 'https://inaraliving.in', // Replace with your frontend domain
+  origin: allowedOrigins,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true, // Optional: Only if you're using cookies
 }));
- // Enable CORS
+
+// Uncomment the following lines if you want to restrict CORS to specific origins
+// app.use(cors({
+//   origin: function (origin, callback) {
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error("Not allowed by CORS"));
+//     }
+//   },
+//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+//   allowedHeaders: ['Content-Type', 'Authorization']
+// }));
+
 app.use(express.json());
 
 // Connect to MongoDB
