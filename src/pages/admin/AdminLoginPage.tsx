@@ -15,13 +15,13 @@ export function AdminLoginPage() {
   e.preventDefault();
   try {
     const response = await fetch("https://inaraliving-in.onrender.com/api/admin/login", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-      credentials: 'include' // Important for cookies
-    });
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({ email, password }),
+});
+
     
     if (!response.ok) throw new Error('Login failed');
     
