@@ -3,6 +3,7 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import Admin from "../models/Admin.js";
 import { getAllLeads } from "../controllers/adminController.js"; // Make sure this exists
+import authMiddleware from "../middlewares/auth.js";
 
 const router = express.Router();
 
@@ -31,6 +32,9 @@ router.post("/login", async (req, res) => {
 });
 
 // Leads route
-router.get("/leads", getAllLeads);
+
+
+router.get("/leads", authMiddleware, getAllLeads); // Protect this!
+
 
 export default router;
