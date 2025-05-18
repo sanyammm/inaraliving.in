@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../lib/auth";
+// import { useAuth } from "../../lib/auth";
 import { ArrowLeft } from "lucide-react";
 
 export function AdminLoginPage() {
@@ -8,19 +8,30 @@ export function AdminLoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { login } = useAuth();
+  // const { login } = useAuth();
 
   
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const response = await login(email, password); // now expects token
-      localStorage.setItem("adminToken", response.token);
-      navigate("/admin/dashboard");
-    } catch {
-      setError("Invalid credentials");
-    }
-  };
+  e.preventDefault();
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+      credentials: 'include' // Important for cookies
+    });
+    
+    if (!response.ok) throw new Error('Login failed');
+    
+    const data = await response.json();
+    localStorage.setItem("adminToken", data.token); // Optional backup
+    navigate("/admin/dashboard");
+  } catch {
+    setError("Invalid credentials");
+  }
+};
   
 
   return (

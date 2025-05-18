@@ -11,7 +11,7 @@ const app = express();
 
 // app.use(cors()); 
 //  Enable CORS
- const allowedOrigins = ['https://inaraliving.in', 'http://localhost:5173']; // Add your allowed origins here
+ const allowedOrigins = ['https://inaraliving.in', 'http://localhost:5173', 'https://inaraliving-in.onrender.com']; // Add your allowed origins here
 
 app.use(cors({
   origin: allowedOrigins,
