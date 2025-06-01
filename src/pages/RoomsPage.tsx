@@ -8,6 +8,11 @@ import {
   FaArrowRight,
   FaBoxes,
   FaWhatsapp,
+  FaUser,
+  FaUsers,
+  FaFire,
+  FaStar,
+  FaEye,
 } from "react-icons/fa";
 import Whatsapp from "../components/Whatsapp"; // Adjust the path as needed
 import { MdWorkHistory } from "react-icons/md";
@@ -21,7 +26,7 @@ export const rooms = [
     id: "1",
     name: "Solo Luxe",
     type: "single",
-    price: 20949,
+    price: 21999,
     description: "A cozy single room with all basic amenities.",
     amenities: ["Attached Bathroom", "Study Table", "Single Bed", "Wardrobe"],
     imageUrl: [
@@ -37,7 +42,7 @@ export const rooms = [
     id: "2",
     name: "Twin Deluxe",
     type: "double",
-    price: 18949,
+    price: 18999,
     description: "Spacious double room perfect for sharing.",
     amenities: [
       "Attached Bathroom",
@@ -57,7 +62,7 @@ export const rooms = [
     id: "3",
     name: "Premium Suite",
     type: "suite",
-    price: 24949,
+    price: 24999,
     description: "A luxurious suite with premium amenities.",
     amenities: [
       "King Size Bed",
@@ -80,6 +85,17 @@ export const rooms = [
   },
 ];
 
+// Types for the urgency badges
+
+type UrgencyBadge = {
+  id: string;
+  text: string;
+  icon: JSX.Element;
+  bgColor: string;
+  textColor: string;
+  borderColor: string; 
+};
+
 export function RoomsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isProofModalOpen, setIsProofModalOpen] = useState(false); // State for the second modal
@@ -98,6 +114,76 @@ export function RoomsPage() {
   const [userPhone, setUserPhone] = useState("");
   const [transactionId, setTransactionId] = useState("");
   const [moveInDate, setmoveInDate] = useState("");
+  const [activeBadges, setActiveBadges] = useState<{ [key: string]: number }>(
+    {}
+  );
+
+  // Define all possible urgency badges
+  const urgencyBadges: UrgencyBadge[] = [
+    {
+      id: "filling-fast",
+      text: "Filling fast!",
+      icon: <FaFire className="mr-1.5" size={14} />,
+      bgColor: "bg-orange-500/20 backdrop-blur-md",
+      textColor: "text-white",
+      borderColor: "border-orange-400/30"
+    },
+    {
+      id: "visiting-today",
+      text: "1 person visiting today",
+      icon: <FaUser className="mr-1.5" size={14} />,
+      bgColor: "bg-blue-500/20 backdrop-blur-md",
+      textColor: "text-white",
+      borderColor: "border-blue-400/30"
+    },
+    {
+      id: "almost-full",
+      text: "Almost full!",
+      icon: <FaUsers className="mr-1.5" size={14} />,
+      bgColor: "bg-red-500/20 backdrop-blur-md",
+      textColor: "text-white",
+      borderColor: "border-red-400/30"
+    },
+    {
+      id: "viewing-now",
+      text: "4 people viewing now",
+      icon: <FaEye className="mr-1.5" size={14} />,
+      bgColor: "bg-purple-500/20 backdrop-blur-md",
+      textColor: "text-white",
+      borderColor: "border-purple-400/30"
+    },
+  ];
+
+  // Initialize active badges for each room
+  useEffect(() => {
+    const initialBadges: { [key: string]: number } = {};
+    rooms.forEach((room, index) => {
+      initialBadges[room.id] = index % urgencyBadges.length;
+    });
+    setActiveBadges(initialBadges);
+
+    // Set up rotation of badges
+    const interval = setInterval(() => {
+      setActiveBadges((prev) => {
+        const newBadges = { ...prev };
+        Object.keys(newBadges).forEach((roomId) => {
+          // Get next badge index, ensuring no two rooms have the same badge
+          let nextIndex;
+          do {
+            nextIndex = Math.floor(Math.random() * urgencyBadges.length);
+          } while (
+            Object.values(newBadges).includes(nextIndex) &&
+            Object.keys(newBadges).length <= urgencyBadges.length
+          );
+
+          newBadges[roomId] = nextIndex;
+        });
+        return newBadges;
+      });
+    }, 5000); // Rotate every 5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
 
   // Prevent scrolling when the modal is open
   useEffect(() => {
@@ -151,20 +237,23 @@ export function RoomsPage() {
     console.log("Room ID being sent:", selectedRoom?.id);
 
     try {
-      const response = await fetch("https://inaraliving-in.onrender.com/api/booking", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          roomId: selectedRoom?.id ?? "",
-          roomName: selectedRoom?.name ?? "",
-          roomPrice: selectedRoom?.price ?? 0,
-          userName,
-          userPhone,
-          moveInDate,
-          transactionId,
-          totalAmount, // Send the calculated total amount to the backend
-        }),
-      });
+      const response = await fetch(
+        "https://inaraliving-in.onrender.com/api/booking",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            roomId: selectedRoom?.id ?? "",
+            roomName: selectedRoom?.name ?? "",
+            roomPrice: selectedRoom?.price ?? 0,
+            userName,
+            userPhone,
+            moveInDate,
+            transactionId,
+            totalAmount, // Send the calculated total amount to the backend
+          }),
+        }
+      );
 
       if (response.ok) {
         toast.success(
@@ -244,96 +333,121 @@ export function RoomsPage() {
 
         {/* Rooms Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {rooms.map((room) => (
-            <div
-              key={room.id}
-              className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow flex flex-col relative overflow-hidden"
-            >
-              {/* Limited Offer Badge */}
-              <div className="absolute top-2 right-2 bg-gradient-to-r from-red-500 to-orange-500 text-white text-xs font-bold py-1 px-2 rounded-full shadow-md z-0">
-                Limited Offer
+          {rooms.map((room) => {
+            const currentBadgeIndex = activeBadges[room.id] || 0;
+            const currentBadge = urgencyBadges[currentBadgeIndex];
+
+            return (
+              <div
+                key={room.id}
+                className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow flex flex-col relative overflow-hidden"
+              >
+                {/* Top Badges */}
+                <div className="absolute top-3 left-3 right-3 z-10 flex justify-between items-start">
+                  {/* Preferred by students badge */}
+                  <div className="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2 py-1 rounded-full flex items-center">
+                    <FaStar className="mr-1 text-yellow-500" />
+                    Preferred by students
+                  </div>
+
+                  {/* Limited Offer Badge */}
+                  <div className="bg-gradient-to-r from-red-500 to-orange-500 text-white text-xs font-bold py-1 px-2 rounded-full shadow-md">
+                    Limited Offer
+                  </div>
+                </div>
+
+
+                {/* Image container with overlay */}
+              <div className="relative">
+                <img
+                  src={Array.isArray(room.imageUrl) ? room.imageUrl[0] : room.imageUrl}
+                  alt={room.name}
+                  className="w-full h-48 object-cover rounded-t-lg"
+                />
+                
+                {/* Glass-style Urgency Bar */}
+                {currentBadge && (
+                  <div className={`absolute bottom-0 left-0 right-0 ${currentBadge.bgColor} ${currentBadge.textColor} ${currentBadge.borderColor} border-t py-2 px-4 flex items-center justify-center transition-all duration-300 backdrop-blur-md`}>
+                    <div className="flex items-center text-sm font-medium">
+                      {currentBadge.icon}
+                      <span className="drop-shadow-sm">{currentBadge.text}</span>
+                    </div>
+                  </div>
+                )}
               </div>
 
-              <img
-                src={
-                  Array.isArray(room.imageUrl)
-                    ? room.imageUrl[0]
-                    : room.imageUrl
-                }
-                alt={room.name}
-                className="w-full h-48 object-cover rounded-t-lg"
-              />
-              <div className="p-6 flex flex-col flex-grow">
-                {/* Room Title */}
-                <h2 className="text-xl font-semibold text-[#1f4e5f] mb-1">
-                  {room.name}
-                </h2>
-                <p className="text-sm text-[#4b5563] mb-3">
-                  {room.description}
-                </p>
+                <div className="p-6 flex flex-col flex-grow">
+                  {/* Room Title */}
+                  <h2 className="text-xl font-semibold text-[#1f4e5f] mb-1">
+                    {room.name}
+                  </h2>
+                  <p className="text-sm text-[#4b5563] mb-3">
+                    {room.description}
+                  </p>
 
-                {/* Amenities */}
-                <div className="mb-4">
-                  <h3 className="text-sm font-medium text-gray-900 mb-2">
-                    Key Features:
-                  </h3>
-                  <div className="grid grid-cols-2 gap-2 text-sm text-[#4b5563]">
-                    {room.amenities.slice(0, 4).map((amenity, index) => (
-                      <div key={index} className="flex items-center gap-2">
-                        {amenityIcons[amenity] ?? <FaArrowRight />}
-                        <span>{amenity}</span>
-                      </div>
-                    ))}
+                  {/* Amenities */}
+                  <div className="mb-4">
+                    <h3 className="text-sm font-medium text-gray-900 mb-2">
+                      Key Features:
+                    </h3>
+                    <div className="grid grid-cols-2 gap-2 text-sm text-[#4b5563]">
+                      {room.amenities.slice(0, 4).map((amenity, index) => (
+                        <div key={index} className="flex items-center gap-2">
+                          {amenityIcons[amenity] ?? <FaArrowRight />}
+                          <span>{amenity}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <Link
+                      to="/amenities"
+                      className="text-sm text-[#1f4e5f] hover:text-indigo-800 mt-2 inline-block"
+                    >
+                      View All Amenities
+                    </Link>
                   </div>
-                  <Link
-                    to="/amenities"
-                    className="text-sm text-[#1f4e5f] hover:text-indigo-800 mt-2 inline-block"
-                  >
-                    View All Amenities
-                  </Link>
-                </div>
 
-                {/* Pricing */}
-                <div className="flex justify-between items-center mb-4">
-                  <div>
-                    <p className="text-sm text-[#4b5563]">Rent</p>
-                    <p className="text-xl font-bold text-[#1f4e5f]">
-                      ₹{room.price.toLocaleString()}
-                      <span className="text-sm text-gray-500"> /month*</span>
-                    </p>
-                    <p className="text-sm text-gray-500 line-through">
-                      ₹{(room.price + 2000).toLocaleString()}
-                    </p>
+                  {/* Pricing */}
+                  <div className="flex justify-between items-center mb-4">
+                    <div>
+                      <p className="text-sm text-[#4b5563]">Rent</p>
+                      <p className="text-xl font-bold text-[#1f4e5f]">
+                        ₹{room.price.toLocaleString()}
+                        <span className="text-sm text-gray-500"> /month*</span>
+                      </p>
+                      <p className="text-sm text-gray-500 line-through">
+                        ₹{(room.price + 2000).toLocaleString()}
+                      </p>
+                    </div>
+                    <div className="border-l border-gray-300 pl-4">
+                      <p className="text-sm text-[#4b5563]">Deposit</p>
+                      <p className="text-sm font-medium text-[#1f4e5f]">
+                        ₹{(room.price * 2).toLocaleString()}
+                      </p>
+                    </div>
                   </div>
-                  <div className="border-l border-gray-300 pl-4">
-                    <p className="text-sm text-[#4b5563]">Deposit</p>
-                    <p className="text-sm font-medium text-[#1f4e5f]">
-                      ₹{(room.price * 2).toLocaleString()}
-                    </p>
-                  </div>
-                </div>
 
-                {/* Actions */}
-                <div className="mt-auto flex flex-col sm:flex-row gap-3">
-                  <button
-                    onClick={() => {
-                      setSelectedRoom(room); // Set the selected room
-                      setIsModalOpen(true); // Open the booking modal
-                    }}
-                    className="w-full sm:w-1/2 bg-[#1f4e5f] hover:bg-indigo-700 text-white py-2 rounded-md transition text-sm"
-                  >
-                    Book Now
-                  </button>
-                  <Link
-                    to={`/explore/${room.id}`}
-                    className="w-full sm:w-1/2 bg-white border border-[#1f4e5f] text-[#1f4e5f] hover:bg-[#ec4899] hover:text-white transition text-center py-2 rounded-md text-sm"
-                  >
-                    Explore Room
-                  </Link>
+                  {/* Actions */}
+                  <div className="mt-auto flex flex-col sm:flex-row gap-3">
+                    <button
+                      onClick={() => {
+                        setSelectedRoom(room);
+                        setIsModalOpen(true);
+                      }}
+                      className="w-full sm:w-1/2 bg-[#1f4e5f] hover:bg-indigo-700 text-white py-2 rounded-md transition text-sm"
+                    >
+                      Book Now
+                    </button>
+                    <Link
+                      to={`/explore/${room.id}`}
+                      className="w-full sm:w-1/2 bg-white border border-[#1f4e5f] text-[#1f4e5f] hover:bg-[#ec4899] hover:text-white transition text-center py-2 rounded-md text-sm"
+                    >
+                      Explore Room
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
       {/* WhatsApp Floating Widget */}

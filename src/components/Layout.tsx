@@ -149,7 +149,7 @@ export function Layout({ children }: LayoutProps) {
                 isMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
               }`}
             >
-              <div className="flex flex-col space-y-3 p-4">
+              <div className="flex flex-col space-y-3 p-4 pl-6">
                 {[
                   { path: "/rooms", label: "Rooms" },
                   { path: "/pricing", label: "Pricing" },
