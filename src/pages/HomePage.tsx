@@ -178,7 +178,7 @@ export function HomePage() {
         <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-[#1f4e5f]">
           Visit Us
         </h2>
-        <div className="w-full max-w-4xl mx-auto h-[300px] mb-6">
+        <div className="w-full max-w-4xl mx-auto h-[300px] mb-7">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3499.8123634138433!2d77.20485599999999!3d28.695259000000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd9325a067b5%3A0x63dcbc73b06cc9cd!2sInara%20Living%20%E2%80%93%20Girls%20PG%20in%20Hudson%20Lane%20%7C%20North%20Campus%20%7C%20Near%20GTB%20Nagar%20Metro%20Station!5e0!3m2!1sen!2sin!4v1746098766343!5m2!1sen!2sin"
             className="w-full h-full rounded-lg shadow-md"
@@ -190,7 +190,7 @@ export function HomePage() {
           href="https://wa.me/917454943021?text=I%20want%20to%20book%20a%20room%20visit%20at%20Inara%20Living"
           target="_blank"
           rel="noopener noreferrer"
-          className="bg-[#1f4e5f] text-white px-6 py-3 rounded-full hover:bg-[#ec4899] transition"
+          className="bg-[#1f4e5f] text-white px-7 py-3 rounded-full hover:bg-[#ec4899] transition"
         >
           Book a Visit
         </a>

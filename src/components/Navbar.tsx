@@ -11,7 +11,7 @@ export function Navbar() {
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link to="/" className="text-2xl font-bold">
-              Inaरa Living
+              Inara Living
             </Link>
           </div>
 
@@ -25,7 +25,7 @@ export function Navbar() {
                 className="h-6 w-6"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
-                viewBox="0 24 24"
+                viewBox="0 0 24 24"
                 stroke="currentColor"
               >
                 <path
@@ -43,30 +43,26 @@ export function Navbar() {
           {/* Links */}
           <div
             className={`${
-              isOpen ? "fixed top-16 left-0 w-full bg-[#1f4e5f] z-10" : "hidden"
-            } md:flex flex-col md:flex-row md:space-x-4 items-center`}
+              isOpen ? "block absolute top-full left-0 w-full bg-[#1f4e5f] z-10" : "hidden"
+            } md:flex flex-col md:flex-row md:space-x-4`}
           >
-            <Link to="/" className="block px-4 py-2 hover:text-[#ec4899]">
-              Home
-            </Link>
-            <Link to="/rooms" className="block px-4 py-2 hover:text-[#4f46e5]">
-              Rooms
-            </Link>
-            <Link
-              to="/pricing"
-              className="block px-4 py-2 hover:text-[#4f46e5]"
-            >
-              Pricing
-            </Link>
-            <Link
-              to="/contact"
-              className="block px-4 py-2 hover:text-[#4f46e5]"
-            >
-              Contact
-            </Link>
-            <Link to="/about" className="block px-4 py-2 hover:text-[#4f46e5]">
-              About
-            </Link>
+            <div className="px-4 py-2 space-y-2 md:space-y-0 md:flex md:items-center">
+              <Link to="/" className="block hover:text-[#ec4899]">
+                Home
+              </Link>
+              <Link to="/rooms" className="block hover:text-[#4f46e5]">
+                Rooms
+              </Link>
+              <Link to="/pricing" className="block hover:text-[#4f46e5]">
+                Pricing
+              </Link>
+              <Link to="/contact" className="block hover:text-[#4f46e5]">
+                Contact
+              </Link>
+              <Link to="/about" className="block hover:text-[#4f46e5]">
+                About
+              </Link>
+            </div>
           </div>
 
           {/* Admin Profile Icon */}

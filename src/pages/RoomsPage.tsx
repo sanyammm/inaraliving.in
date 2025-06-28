@@ -10,10 +10,14 @@ import {
   FaWhatsapp,
   FaUser,
   FaUsers,
-  FaFire,
   FaStar,
   FaEye,
 } from "react-icons/fa";
+
+import { BiSolidTimer } from "react-icons/bi";
+import { IoBed } from "react-icons/io5";
+import { FaPersonArrowDownToLine } from "react-icons/fa6";
+
 import Whatsapp from "../components/Whatsapp"; // Adjust the path as needed
 import { MdWorkHistory } from "react-icons/md";
 import { useState, useEffect } from "react"; // Import useEffect
@@ -93,7 +97,7 @@ type UrgencyBadge = {
   icon: JSX.Element;
   bgColor: string;
   textColor: string;
-  borderColor: string; 
+  borderColor: string;
 };
 
 export function RoomsPage() {
@@ -123,10 +127,10 @@ export function RoomsPage() {
     {
       id: "filling-fast",
       text: "Filling fast!",
-      icon: <FaFire className="mr-1.5" size={14} />,
+      icon: <BiSolidTimer className="mr-1.5" size={19}  />,
       bgColor: "bg-orange-500/20 backdrop-blur-md",
       textColor: "text-white",
-      borderColor: "border-orange-400/30"
+      borderColor: "border-orange-400/30",
     },
     {
       id: "visiting-today",
@@ -134,23 +138,39 @@ export function RoomsPage() {
       icon: <FaUser className="mr-1.5" size={14} />,
       bgColor: "bg-blue-500/20 backdrop-blur-md",
       textColor: "text-white",
-      borderColor: "border-blue-400/30"
+      borderColor: "border-blue-400/30",
     },
     {
       id: "almost-full",
       text: "Almost full!",
-      icon: <FaUsers className="mr-1.5" size={14} />,
+      icon: <FaUsers className="mr-1.5" size={16} />,
       bgColor: "bg-red-500/20 backdrop-blur-md",
       textColor: "text-white",
-      borderColor: "border-red-400/30"
+      borderColor: "border-red-400/30",
     },
     {
       id: "viewing-now",
       text: "4 people viewing now",
-      icon: <FaEye className="mr-1.5" size={14} />,
+      icon: <FaEye className="mr-1.5" size={16} />,
       bgColor: "bg-purple-500/20 backdrop-blur-md",
       textColor: "text-white",
-      borderColor: "border-purple-400/30"
+      borderColor: "border-purple-400/30",
+    },
+    {
+      id: "bed-lefts",
+      text: "15 Beds Left!",
+      icon: <IoBed className="mr-1.5" size={16} />,
+      bgColor: "bg-pink-500/20 backdrop-blur-md",
+      textColor: "text-white",
+      borderColor: "border-pink-400/30",
+    },
+    {
+      id: "moving-in-today",
+      text: "2 People Moving-In Today",
+      icon: <FaPersonArrowDownToLine className="mr-1.5" size={16} />,
+      bgColor: "bg-green-500/20 backdrop-blur-md",
+      textColor: "text-white",
+      borderColor: "border-green-400/30",
     },
   ];
 
@@ -342,40 +362,47 @@ export function RoomsPage() {
                 key={room.id}
                 className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow flex flex-col relative overflow-hidden"
               >
-                {/* Top Badges */}
-                <div className="absolute top-3 left-3 right-3 z-10 flex justify-between items-start">
-                  {/* Preferred by students badge */}
-                  <div className="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2 py-1 rounded-full flex items-center">
-                    <FaStar className="mr-1 text-yellow-500" />
-                    Preferred by students
-                  </div>
+                {/* Image container with overlay and top badges */}
+                <div className="relative">
+                  {/* Image */}
+                  <img
+                    src={
+                      Array.isArray(room.imageUrl)
+                        ? room.imageUrl[0]
+                        : room.imageUrl
+                    }
+                    alt={room.name}
+                    className="w-full h-48 object-cover rounded-t-lg"
+                  />
 
-                  {/* Limited Offer Badge */}
-                  <div className="bg-gradient-to-r from-red-500 to-orange-500 text-white text-xs font-bold py-1 px-2 rounded-full shadow-md">
-                    Limited Offer
-                  </div>
-                </div>
+                  {/* Top Badges */}
+                  <div className="absolute top-3 left-3 right-3 flex justify-between items-start">
+                    {/* Preferred by students badge */}
+                    <div className="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2 py-1 rounded-full flex items-center">
+                      <FaStar className="mr-1 text-yellow-500" />
+                      Preferred by students
+                    </div>
 
-
-                {/* Image container with overlay */}
-              <div className="relative">
-                <img
-                  src={Array.isArray(room.imageUrl) ? room.imageUrl[0] : room.imageUrl}
-                  alt={room.name}
-                  className="w-full h-48 object-cover rounded-t-lg"
-                />
-                
-                {/* Glass-style Urgency Bar */}
-                {currentBadge && (
-                  <div className={`absolute bottom-0 left-0 right-0 ${currentBadge.bgColor} ${currentBadge.textColor} ${currentBadge.borderColor} border-t py-2 px-4 flex items-center justify-center transition-all duration-300 backdrop-blur-md`}>
-                    <div className="flex items-center text-sm font-medium">
-                      {currentBadge.icon}
-                      <span className="drop-shadow-sm">{currentBadge.text}</span>
+                    {/* Limited Offer Badge */}
+                    <div className="bg-gradient-to-r from-red-500 to-orange-500 text-white text-xs font-bold py-1 px-2 rounded-full shadow-md">
+                      Limited Offer
                     </div>
                   </div>
-                )}
-              </div>
 
+                  {/* Glass-style Urgency Bar */}
+                  {currentBadge && (
+                    <div
+                      className={`absolute bottom-0 left-0 right-0 ${currentBadge.bgColor} ${currentBadge.textColor} ${currentBadge.borderColor} border-t py-2 px-4 flex items-center justify-center transition-all duration-300 backdrop-blur-md`}
+                    >
+                      <div className="flex items-center text-sm font-medium">
+                        {currentBadge.icon}
+                        <span className="drop-shadow-sm">
+                          {currentBadge.text}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </div>
                 <div className="p-6 flex flex-col flex-grow">
                   {/* Room Title */}
                   <h2 className="text-xl font-semibold text-[#1f4e5f] mb-1">

@@ -65,7 +65,7 @@ export default function HeroSection() {
 
   const stats = [
     { icon: <FaBed className="text-white stroke-[#D4AF37] stroke-[40px]"/>, value: "100+", label: "Beds Prebooked" },
-    { icon: <FaHourglass className="text-white stroke-[#D4AF37] stroke-[40px]"/>, value: "90%", label: "Rooms Filled in Prelaunch" },
+    { icon: <FaHourglass className="text-white stroke-[#D4AF37] stroke-[40px]"/>, value: "80%", label: "Rooms Filled in Prelaunch" },
     {
       icon: <FaTrophy className="text-white stroke-[#D4AF37] stroke-[40px]"/>,
       value: "#1",
