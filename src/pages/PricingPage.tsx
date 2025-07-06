@@ -69,18 +69,21 @@ export function PricingPage() {
     const totalAmount = selectedPlan ? selectedPlan.price * 2 : 0;
 
     try {
-      const response = await fetch("https://inaraliving-in.onrender.com/api/booking", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          planName: selectedPlan?.type ?? "",
-          userName,
-          userPhone,
-          moveInDate,
-          transactionId,
-          totalAmount, // Include totalAmount in the request payload
-        }),
-      });
+      const response = await fetch(
+        "https://inaraliving-in.onrender.com/api/booking",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            planName: selectedPlan?.type ?? "",
+            userName,
+            userPhone,
+            moveInDate,
+            transactionId,
+            totalAmount, // Include totalAmount in the request payload
+          }),
+        }
+      );
 
       if (response.ok) {
         toast.success(
@@ -185,7 +188,7 @@ export function PricingPage() {
             },
             {
               type: "Twin Deluxe",
-              price: 18999,
+              price: 19999,
               originalPrice: 19999,
               features: [
                 {

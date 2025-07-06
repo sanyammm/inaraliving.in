@@ -46,7 +46,7 @@ export const rooms = [
     id: "2",
     name: "Twin Deluxe",
     type: "double",
-    price: 18999,
+    price: 19999,
     description: "Spacious double room perfect for sharing.",
     amenities: [
       "Attached Bathroom",
@@ -127,7 +127,7 @@ export function RoomsPage() {
     {
       id: "filling-fast",
       text: "Filling fast!",
-      icon: <BiSolidTimer className="mr-1.5" size={19}  />,
+      icon: <BiSolidTimer className="mr-1.5" size={19} />,
       bgColor: "bg-orange-500/20 backdrop-blur-md",
       textColor: "text-white",
       borderColor: "border-orange-400/30",
