@@ -8,31 +8,35 @@ export function AdminLoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [success, setSuccess] = useState(""); // Add success state
   // const { login } = useAuth();
 
-  
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  try {
-    const response = await fetch("https://inaraliving-in.onrender.com/api/admin/login", {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({ email, password }),
-});
+    setError("");
+    e.preventDefault();
+    setSuccess(""); // Reset success on submit
+    try {
+      const response = await fetch(
+        "https://inaraliving-in.onrender.com/api/admin/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
 
-    
-    if (!response.ok) throw new Error('Login failed');
-    
-    const data = await response.json();
-    localStorage.setItem("adminToken", data.token); // Optional backup
-    navigate("/admin/dashboard");
-  } catch {
-    setError("Invalid credentials");
-  }
-};
-  
+      if (!response.ok) throw new Error("Login failed");
+
+      const data = await response.json();
+      localStorage.setItem("adminToken", data.token); // Optional backup
+      setSuccess("Login successful! Redirecting..."); // Set success message
+      setTimeout(() => navigate("/dashboard"), 1200); // Redirect after 1.2 seconds
+    } catch {
+      setError("Invalid credentials");
+    }
+  };
 
   return (
     <div className="h-screen flex items-center justify-center bg-gradient-to-br from-[#f3f4f6] to-[#e5e7eb] px-4">
@@ -59,6 +63,13 @@ export function AdminLoginPage() {
         {error && (
           <div className="bg-red-100 text-red-700 p-3 rounded-lg mb-4 text-center">
             {error}
+          </div>
+        )}
+
+        {/* Success Message */}
+        {success && (
+          <div className="bg-green-100 text-green-700 p-3 rounded-lg mb-4 text-center">
+            {success}
           </div>
         )}
 

@@ -18,6 +18,10 @@ export function ExploreRoomPage() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0); // Track the current image index
   const [showAllPhotos, setShowAllPhotos] = useState(false);
 
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+const [lightboxIndex, setLightboxIndex] = useState(0);
+
+
   // Sample images - replace with your actual image URLs
   const images = room?.images || [];
 
@@ -30,6 +34,16 @@ export function ExploreRoomPage() {
       return () => clearInterval(interval); // Cleanup interval on component unmount
     }
   }, [images.length, showAllPhotos]);
+
+  useEffect(() => {
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "Escape") setIsLightboxOpen(false);
+  };
+
+  document.addEventListener("keydown", handleKeyDown);
+  return () => document.removeEventListener("keydown", handleKeyDown);
+}, []);
+
 
   // Amenities to display
   const amenities = [
@@ -108,13 +122,18 @@ export function ExploreRoomPage() {
           {showAllPhotos ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {images.map((img, idx) => (
-                <img
-                  key={idx}
-                  src={img}
-                  alt={`${room.name} view ${idx + 1}`}
-                  className="w-full h-64 object-cover rounded-lg shadow-sm"
-                />
-              ))}
+  <img
+    key={idx}
+    src={img}
+    alt={`${room.name} view ${idx + 1}`}
+    className="w-full h-64 object-cover rounded-lg shadow-sm cursor-pointer"
+    onClick={() => {
+      setLightboxIndex(idx);
+      setIsLightboxOpen(true);
+    }}
+  />
+))}
+
             </div>
           ) : (
             <div className="relative">
@@ -244,6 +263,45 @@ export function ExploreRoomPage() {
           <FaWhatsapp className="text-2xl" />
         </a>
       </div>
+      {isLightboxOpen && (
+  <div className="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center">
+    <button
+      onClick={() => setIsLightboxOpen(false)}
+      className="absolute top-6 right-6 text-white text-3xl font-bold z-50 hover:text-red-400"
+    >
+      ✕
+    </button>
+
+    {/* Navigation Buttons */}
+    {images.length > 1 && (
+      <>
+        <button
+          onClick={() =>
+            setLightboxIndex((lightboxIndex - 1 + images.length) % images.length)
+          }
+          className="absolute left-4 text-white text-4xl z-50 hover:text-indigo-400"
+        >
+          ‹
+        </button>
+        <button
+          onClick={() =>
+            setLightboxIndex((lightboxIndex + 1) % images.length)
+          }
+          className="absolute right-4 text-white text-4xl z-50 hover:text-indigo-400"
+        >
+          ›
+        </button>
+      </>
+    )}
+
+    <img
+      src={images[lightboxIndex]}
+      alt={`Full view ${lightboxIndex + 1}`}
+      className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-lg"
+    />
+  </div>
+)}
+
     </div>
   );
 }

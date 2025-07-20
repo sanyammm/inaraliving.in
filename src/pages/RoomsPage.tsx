@@ -34,11 +34,17 @@ export const rooms = [
     description: "A cozy single room with all basic amenities.",
     amenities: ["Attached Bathroom", "Study Table", "Single Bed", "Wardrobe"],
     imageUrl: [
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80",
+      "/images/1.jpg",
     ],
     images: [
-      "https://images.unsplash.com/photo-1615874959474-d609969a20ed?auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
+      "/images/1.jpg",
+      "/images/2.jpg",
+      "/images/5.jpg",
+      "/images/8.jpg",
+      "/images/9.jpg",
+      "/images/10.jpg",
+      "/images/6.jpg",
+      "/images/18.jpg",
     ],
     available: true,
   },
@@ -55,10 +61,16 @@ export const rooms = [
       "2 Wardrobes",
     ],
     imageUrl:
-      "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80",
+      "/images/4.jpg",
     images: [
-      "https://images.unsplash.com/photo-1615874959474-d609969a20ed?auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
+      "/images/4.jpg",
+      "/images/7.jpg",
+      "/images/3.jpg",
+      "/images/8.jpg",
+      "/images/9.jpg",
+      "/images/10.jpg",
+      "/images/6.jpg",
+      "/images/18.jpg",
     ],
     available: true,
   },
@@ -77,13 +89,18 @@ export const rooms = [
       "3 Meals/Day",
       "Personal TV",
     ],
-    imageUrl:
-      "https://images.unsplash.com/photo-1615874959474-d609969a20ed?auto=format&fit=crop&w=800&q=80",
+    imageUrl: [
+      "/images/3.jpg",
+    ],
     images: [
-      "https://images.unsplash.com/photo-1615874959474-d609969a20ed?auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1615874959474-d609969a20ed?auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
+      "/images/1.jpg",
+      "/images/2.jpg",
+      "/images/5.jpg",
+      "/images/8.jpg",
+      "/images/9.jpg",
+      "/images/10.jpg",
+      "/images/6.jpg",
+      "/images/18.jpg",
     ],
     available: true,
   },
@@ -352,7 +369,7 @@ export function RoomsPage() {
         </h1>
 
         {/* Rooms Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-center">
           {rooms.map((room) => {
             const currentBadgeIndex = activeBadges[room.id] || 0;
             const currentBadge = urgencyBadges[currentBadgeIndex];
@@ -477,6 +494,13 @@ export function RoomsPage() {
           })}
         </div>
       </div>
+
+      {/* Disclaimer */}
+      <div className="max-w-7xl mx-auto mt-8 px-4 text-center text-xs text-gray-500">
+        * Room prices and availability may vary. For the latest updates, please
+        visit our PG or contact us directly.
+      </div>
+
       {/* WhatsApp Floating Widget */}
       <Whatsapp message="Hi Inara Living, I want to inquire about room bookings." />
 

@@ -14,10 +14,10 @@ import {
 } from "react-icons/fa";
 import { FaHelmetSafety, FaTrophy } from "react-icons/fa6";
 
+
 const slides = [
   {
-    image:
-      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+    image: "/images/24.jpg",
     headline: "Premium Student Accommodation",
     subheadline: "Fully-furnished homes with all-inclusive amenities",
     cta: "Explore Properties",
@@ -29,7 +29,7 @@ const slides = [
   },
   {
     image:
-      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+      "/images/22.jpg",
     headline: "Live With Your Tribe",
     subheadline: "Vibrant community spaces designed for connections",
     cta: "Book a Tour",
@@ -41,7 +41,7 @@ const slides = [
   },
   {
     image:
-      "https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+      "/images/20.jpg",
     headline: "All-Inclusive Living",
     subheadline: "No hidden charges. Everything included in one rent",
     cta: "View Pricing",

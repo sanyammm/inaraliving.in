@@ -1,3 +1,4 @@
+import { useRef, useEffect } from "react";
 import { Building2, Wifi, Shield, Utensils } from "lucide-react";
 import Spotlight from "./Spotlight";
 import Footer from "./Footer";
@@ -6,10 +7,41 @@ import HeroSection from "./HeroSection";
 import { FaHome, FaMapMarkerAlt } from "react-icons/fa";
 
 export function HomePage() {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const video = videoRef.current;
+        if (!video) return;
+
+        if (entry.isIntersecting) {
+          video.play().catch((e) => {
+            console.warn("Video playback prevented:", e);
+          });
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0.5 } // Adjust visibility threshold as needed
+    );
+
+    if (videoRef.current) {
+      observer.observe(videoRef.current);
+    }
+
+    return () => {
+      if (videoRef.current) {
+        observer.unobserve(videoRef.current);
+      }
+    };
+  }, []);
+
   return (
     <div className="space-y-4 bg-[#f9fafb]">
       {/* Hero Section */}
       <HeroSection />
+
       {/* Community Living Section */}
       <div className="flex flex-col-reverse sm:flex-row items-center gap-10 px-6">
         <div className="sm:w-1/2 text-center sm:text-left">
@@ -37,19 +69,19 @@ export function HomePage() {
         <div className="sm:w-1/2 flex gap-4 py-5">
           <div className="w-1/2">
             <img
-              src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92"
+              src="/images/15_1.jpg"
               alt="Community Living"
               className="w-full h-[500px] sm:h-[550px] rounded-lg shadow-md object-cover"
             />
           </div>
           <div className="w-1/2 flex flex-col justify-between gap-4">
             <img
-              src="https://images.unsplash.com/photo-1615874959474-d609969a20ed?auto=format&fit=crop&q=10"
+              src="/images/16.jpg"
               alt="Shared Spaces"
               className="w-full h-[240px] sm:h-[265px] rounded-lg shadow-md object-cover"
             />
             <img
-              src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af"
+              src="/images/19.jpg"
               alt="Comfortable Rooms"
               className="w-full h-[240px] sm:h-[265px] rounded-lg shadow-md object-cover"
             />
@@ -76,14 +108,26 @@ export function HomePage() {
       {/* Advantages Section */}
       <section className="py-12 px-4 sm:py-16 sm:px-10 relative z-0">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 items-center">
-          {/* Image */}
+          {/* Subtle intro text */}
+          <div className="col-span-full mb-0 text-center">
+            <p className="text-sm text-[#6b7280] italic select-none user-select-none">
+              See what life at Inara looks like from the inside out…
+            </p>
+          </div>
+
+          {/* Video Section */}
           <div className="relative group">
             <div className="relative z-10 rounded-xl overflow-hidden shadow-xl transform group-hover:scale-105 transition duration-500">
-              <img
-                src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92"
-                alt="Inara Living"
-                className="w-full h-auto object-cover rounded-xl border-4 border-white"
-              />
+              <iframe
+                width="100%"
+                height="800px"
+                src="https://www.youtube.com/embed/qh11pt4utP4?autoplay=1&mute=1&loop=1&playlist=qh11pt4utP4"
+                title="YouTube video"
+                frameBorder="0"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+                className="rounded-xl border-4 border-white"
+              ></iframe>
             </div>
           </div>
 
