@@ -269,20 +269,23 @@ export function RoomsPage() {
     console.log("Room ID being sent:", selectedRoom?.id);
 
     try {
-      const response = await fetch("http://localhost:500/api/booking", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          roomId: selectedRoom?.id ?? "",
-          roomName: selectedRoom?.name ?? "",
-          roomPrice: selectedRoom?.price ?? 0,
-          userName,
-          userPhone,
-          moveInDate,
-          transactionId,
-          totalAmount, // Send the calculated total amount to the backend
-        }),
-      });
+      const response = await fetch(
+        "https://inaraliving-in.onrender.com/api/booking",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            roomId: selectedRoom?.id ?? "",
+            roomName: selectedRoom?.name ?? "",
+            roomPrice: selectedRoom?.price ?? 0,
+            userName,
+            userPhone,
+            moveInDate,
+            transactionId,
+            totalAmount, // Send the calculated total amount to the backend
+          }),
+        }
+      );
 
       if (response.ok) {
         toast.success(

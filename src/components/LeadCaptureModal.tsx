@@ -84,15 +84,18 @@ const LeadCaptureModal: React.FC = () => {
     setApiError("");
 
     try {
-      const response = await fetch("http://localhost:500/api/inquiry", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name.trim(),
-          phone: formData.phone.trim(),
-          agreed: formData.agreed,
-        }),
-      });
+      const response = await fetch(
+        "https://inaraliving-in.onrender.com/api/inquiry",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: formData.name.trim(),
+            phone: formData.phone.trim(),
+            agreed: formData.agreed,
+          }),
+        }
+      );
 
       if (!response.ok) throw new Error(`API Error: ${response.status}`);
 
