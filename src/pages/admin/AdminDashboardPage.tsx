@@ -120,13 +120,13 @@ export function AdminDashboardPage() {
     async function fetchData() {
       setLoading(true);
       try {
-        const token = localStorage.getItem("adminToken");
+        // Remove token logic for static/demo use
         const response = await fetch(
           "https://inaraliving-in.onrender.com/api/admin/leads",
           {
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
+              // Remove Authorization header if backend does not require it
             },
           }
         );

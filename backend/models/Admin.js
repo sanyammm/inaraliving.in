@@ -1,6 +1,4 @@
-// models/Admin.js
 import mongoose from "mongoose";
-import bcrypt from "bcryptjs";
 
 const AdminSchema = new mongoose.Schema({
   email: {
@@ -14,19 +12,6 @@ const AdminSchema = new mongoose.Schema({
   }
 });
 
-// Password hashing before saving
-AdminSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-  next();
-});
-
-// Compare password method
-AdminSchema.methods.matchPassword = async function (enteredPassword) {
-  return await bcrypt.compare(enteredPassword, this.password);
-};
+// Removed password hashing and matching logic since we'll be doing static validation
 
 export default mongoose.model("Admin", AdminSchema);
-
-

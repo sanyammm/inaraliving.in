@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import { useAuth } from "../../lib/auth";
 import { ArrowLeft } from "lucide-react";
 
 export function AdminLoginPage() {
@@ -8,32 +7,25 @@ export function AdminLoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const [success, setSuccess] = useState(""); // Add success state
-  // const { login } = useAuth();
+  const [success, setSuccess] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    setError("");
+  // Hardcoded credentials
+  const validEmail = "admin@inaraliving.in";
+  const validPassword = "Sanyam@6399";
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSuccess(""); // Reset success on submit
-    try {
-      const response = await fetch(
-        "https://inaraliving-in.onrender.com/api/admin/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password }),
-        }
-      );
+    setError("");
+    setSuccess("");
 
-      if (!response.ok) throw new Error("Login failed");
+    if (email === validEmail && password === validPassword) {
+      // Set dummy token and user for dashboard
+      localStorage.setItem("adminToken", "static-token");
+      localStorage.setItem("adminUser", JSON.stringify({ email }));
 
-      const data = await response.json();
-      localStorage.setItem("adminToken", data.token); // Optional backup
-      setSuccess("Login successful! Redirecting..."); // Set success message
-      setTimeout(() => navigate("/dashboard"), 1200); // Redirect after 1.2 seconds
-    } catch {
+      setSuccess("Login successful! Redirecting...");
+      setTimeout(() => navigate("/admin/dashboard"), 1200);
+    } else {
       setError("Invalid credentials");
     }
   };
@@ -43,7 +35,7 @@ export function AdminLoginPage() {
       {/* Logo */}
       <div className="absolute top-2 left-8">
         <img
-          src="/images/inaraWhite.webp" // Replace with the actual path to your logo
+          src="/images/inaraWhite.webp"
           alt="Inaरa Living Logo"
           className="h-16 w-auto"
         />
@@ -51,7 +43,6 @@ export function AdminLoginPage() {
 
       {/* Login Card */}
       <div className="bg-white p-8 md:p-10 rounded-3xl shadow-2xl w-full max-w-md">
-        {/* Page Title */}
         <h1 className="text-4xl font-extrabold text-center mb-6 text-[#1f4e5f]">
           Welcome Back
         </h1>

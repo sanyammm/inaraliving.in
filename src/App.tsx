@@ -2,7 +2,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Navigate,
+  // Navigate,
 } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import { HomePage } from "./pages/HomePage";
@@ -12,7 +12,7 @@ import { ContactPage } from "./pages/ContactPage";
 import { AdminLoginPage } from "./pages/admin/AdminLoginPage";
 import { AdminDashboardPage } from "./pages/admin/AdminDashboardPage";
 import { CommunitiesPage } from "./pages/CommunitiesPage";
-import { useAuth } from "./lib/auth";
+// import { useAuth } from "./lib/auth";
 import { AmenitiesPage } from "./pages/AmenitiesPage";
 import { AboutPage } from "./pages/AboutPage";
 import { ScrollToTop } from "./components/ScrollToTop"; // Import ScrollToTop
@@ -21,14 +21,14 @@ import { ReferEarnPage } from "./pages/ReferEarnPage";
 import { ExploreRoomPage } from "./pages/ExploreRoomPage";
 import LeadCaptureModal from "./components/LeadCaptureModal";
 
-function PrivateRoute({ children }: { children: React.ReactNode }) {
-  const { user } = useAuth();
-  return user?.isAuthenticated ? (
-    <>{children}</>
-  ) : (
-    <Navigate to="/admin/login" />
-  );
-}
+// function PrivateRoute({ children }: { children: React.ReactNode }) {
+//   const { user } = useAuth();
+//   return user?.isAuthenticated ? (
+//     <>{children}</>
+//   ) : (
+//     <Navigate to="/admin/login" />
+//   );
+// }
 
 function App() {
   return (
@@ -48,14 +48,7 @@ function App() {
           <Route path="/rules" element={<HouseRulesPage />} />
           <Route path="/refer" element={<ReferEarnPage />} />
           <Route path="/admin/login" element={<AdminLoginPage />} />
-          <Route
-            path="/admin/dashboard"
-            element={
-              <PrivateRoute>
-                <AdminDashboardPage />
-              </PrivateRoute>
-            }
-          />
+          <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
         </Routes>
       </Layout>
     </Router>

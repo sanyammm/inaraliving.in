@@ -8,35 +8,23 @@ dotenv.config();
 // Initialize Express
 const app = express();
 
+// Enable CORS
+const allowedOrigins = [
+  "https://inaraliving.in",
+  "https://www.inaraliving.in",
+  "http://localhost:5173",
+  "http://localhost:500",
+]; // Add your allowed origins here
 
-// app.use(cors()); 
-//  Enable CORS
- const allowedOrigins = ['https://inaraliving.in', 'https://www.inaraliving.in','http://localhost:5173', 'https://inaraliving-in.onrender.com']; // Add your allowed origins here
+app.use(
+  cors({
+    origin: allowedOrigins,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
-app.use(cors({
-  origin: allowedOrigins,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
-
-// ✅ Use CORS with a dynamic origin function
-const corsOptions = {
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps, Postman)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    } else {
-      return callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-};
-
-// ✅ Use CORS middleware globally
-app.use(cors(corsOptions)); // Handles OPTIONS automatically
-
+// Use CORS middleware globally
 app.use(express.json());
 
 // Connect to MongoDB
@@ -61,4 +49,4 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () =>
   console.log(`✅ Server running on http://localhost:${PORT}`)
 );
-// Export app for testing
+

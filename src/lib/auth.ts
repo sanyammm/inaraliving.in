@@ -10,7 +10,7 @@ interface AuthStore {
 export const useAuth = create<AuthStore>((set) => ({
   user: null,
   login: async (email, password) => {
-    const response = await fetch('https://inaraliving-in.onrender.com/api/admin/login', {
+    const response = await fetch('http://localhost:500/api/admin/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

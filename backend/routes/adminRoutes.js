@@ -1,40 +1,29 @@
-// routes/adminRoutes.js
 import express from "express";
-import jwt from "jsonwebtoken";
-import Admin from "../models/Admin.js";
-import { getAllLeads } from "../controllers/adminController.js"; // Make sure this exists
-import authMiddleware from "../middlewares/auth.js";
+import { getAllLeads } from "../controllers/adminController.js";
 
 const router = express.Router();
 
-// Login route
-router.post("/login", async (req, res) => {
+// Hardcoded admin credentials for login
+const validEmail = "admin@inaraliving.in";
+const validPassword = "Sanyam@6399";
+
+// Login route (static check)
+router.post("/login", (req, res) => {
   const { email, password } = req.body;
 
-  try {
-    const admin = await Admin.findOne({ email });
-
-    if (!admin || !(await admin.matchPassword(password))) {
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
-
-    const token = jwt.sign({ id: admin._id }, process.env.JWT_SECRET, {
-      expiresIn: "7d",
-    });
-
+  // Validate email and password
+  if (email === validEmail && password === validPassword) {
+    // No JWT token, just respond with a success message
     res.status(200).json({
-      token,
-      user: { email: admin.email },
+      message: "Login successful",
+      user: { email: validEmail }, // Just return the hardcoded email
     });
-  } catch (err) {
-    res.status(500).json({ message: "Server error" });
+  } else {
+    return res.status(401).json({ message: "Invalid credentials" });
   }
 });
 
-// Leads route
-
-
-router.get("/leads", authMiddleware, getAllLeads); // Protect this!
-
+// Leads route (No authentication required now)
+router.get("/leads", getAllLeads);
 
 export default router;

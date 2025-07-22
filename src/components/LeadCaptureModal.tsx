@@ -1,5 +1,5 @@
-import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
-import { FaTimes, FaCheck, FaInfoCircle } from 'react-icons/fa';
+import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
+import { FaTimes, FaCheck, FaInfoCircle } from "react-icons/fa";
 
 interface FormData {
   name: string;
@@ -16,23 +16,23 @@ interface FormErrors {
 const LeadCaptureModal: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormData>({
-    name: '',
-    phone: '',
+    name: "",
+    phone: "",
     agreed: false,
   });
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errors, setErrors] = useState<FormErrors>({
-    name: '',
-    phone: '',
-    agreed: '',
+    name: "",
+    phone: "",
+    agreed: "",
   });
-  const [apiError, setApiError] = useState<string>('');
+  const [apiError, setApiError] = useState<string>("");
 
   // Show modal after 5 seconds
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (!localStorage.getItem('leadSubmitted')) {
+      if (!localStorage.getItem("leadSubmitted")) {
         setIsOpen(true);
       }
     }, 5000); // 5000ms = 5 seconds
@@ -41,13 +41,13 @@ const LeadCaptureModal: React.FC = () => {
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {
-      name: !formData.name.trim() ? 'Please enter your name' : '',
+      name: !formData.name.trim() ? "Please enter your name" : "",
       phone: !formData.phone.trim()
-        ? 'Please enter your phone number'
+        ? "Please enter your phone number"
         : !/^\d{10}$/.test(formData.phone)
-        ? 'Enter a valid 10 digit number'
-        : '',
-      agreed: !formData.agreed ? 'Please agree to continue' : '',
+        ? "Enter a valid 10 digit number"
+        : "",
+      agreed: !formData.agreed ? "Please agree to continue" : "",
     };
     setErrors(newErrors);
     return !Object.values(newErrors).some((error) => error);
@@ -57,7 +57,7 @@ const LeadCaptureModal: React.FC = () => {
     const { name, value, type, checked } = e.target;
 
     // Handle checkbox input (checked property exists on checkbox type)
-    if (type === 'checkbox') {
+    if (type === "checkbox") {
       setFormData((prev) => ({
         ...prev,
         [name]: checked, // Use checked for checkboxes
@@ -71,9 +71,9 @@ const LeadCaptureModal: React.FC = () => {
 
     // Reset errors if the user interacts with the form
     if (errors[name as keyof FormErrors]) {
-      setErrors((prev) => ({ ...prev, [name]: '' }));
+      setErrors((prev) => ({ ...prev, [name]: "" }));
     }
-    if (apiError) setApiError('');
+    if (apiError) setApiError("");
   };
 
   const handleSubmit = async (e: FormEvent): Promise<void> => {
@@ -81,12 +81,12 @@ const LeadCaptureModal: React.FC = () => {
     if (!validateForm()) return;
 
     setIsLoading(true);
-    setApiError('');
+    setApiError("");
 
     try {
-      const response = await fetch('https://inaraliving-in.onrender.com/api/inquiry', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("http://localhost:500/api/inquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: formData.name.trim(),
           phone: formData.phone.trim(),
@@ -97,12 +97,12 @@ const LeadCaptureModal: React.FC = () => {
       if (!response.ok) throw new Error(`API Error: ${response.status}`);
 
       await response.json();
-      localStorage.setItem('leadSubmitted', 'true');
+      localStorage.setItem("leadSubmitted", "true");
       setSubmitted(true);
       setTimeout(() => setIsOpen(false), 3000);
     } catch (error) {
-      console.error('Submission failed:', error);
-      setApiError('Failed to submit. Please try again or contact us directly.');
+      console.error("Submission failed:", error);
+      setApiError("Failed to submit. Please try again or contact us directly.");
     } finally {
       setIsLoading(false);
     }
@@ -116,7 +116,9 @@ const LeadCaptureModal: React.FC = () => {
         {/* Header */}
         <div className="bg-gradient-to-r from-[#0F172A] to-[#1E293B] text-white p-5 flex justify-between items-center">
           <div>
-            <h3 className="text-xl font-bold">Exclusive {new Date().getFullYear()} Admissions</h3>
+            <h3 className="text-xl font-bold">
+              Exclusive {new Date().getFullYear()} Admissions
+            </h3>
             <p className="text-[#D4AF37] text-sm mt-1 flex items-center">
               <FaInfoCircle className="mr-1" /> Limited spots remaining
             </p>
@@ -137,13 +139,18 @@ const LeadCaptureModal: React.FC = () => {
               <div className="text-green-500 text-5xl mb-4 flex justify-center">
                 <FaCheck />
               </div>
-              <h4 className="text-2xl font-bold text-gray-800 mb-2">Thank You!</h4>
-              <p className="text-gray-600">Our team will contact you shortly.</p>
+              <h4 className="text-2xl font-bold text-gray-800 mb-2">
+                Thank You!
+              </h4>
+              <p className="text-gray-600">
+                Our team will contact you shortly.
+              </p>
             </div>
           ) : (
             <>
               <p className="text-gray-600 mb-6">
-                Complete this form to get priority access to our premium student accommodations.
+                Complete this form to get priority access to our premium student
+                accommodations.
               </p>
 
               {apiError && (
@@ -156,7 +163,10 @@ const LeadCaptureModal: React.FC = () => {
                 <div className="space-y-4">
                   {/* Name */}
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label
+                      htmlFor="name"
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
                       Full Name *
                     </label>
                     <input
@@ -167,16 +177,23 @@ const LeadCaptureModal: React.FC = () => {
                       value={formData.name}
                       onChange={handleChange}
                       className={`w-full px-4 py-2 border rounded-lg ${
-                        errors.name ? 'border-red-500' : 'border-gray-300 focus:border-[#D4AF37]'
+                        errors.name
+                          ? "border-red-500"
+                          : "border-gray-300 focus:border-[#D4AF37]"
                       } focus:ring-2 focus:ring-[#D4AF37]`}
                       placeholder="Your full name"
                     />
-                    {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
+                    {errors.name && (
+                      <p className="mt-1 text-sm text-red-500">{errors.name}</p>
+                    )}
                   </div>
 
                   {/* Phone */}
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label
+                      htmlFor="phone"
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
                       WhatsApp Number *
                     </label>
                     <input
@@ -187,11 +204,17 @@ const LeadCaptureModal: React.FC = () => {
                       value={formData.phone}
                       onChange={handleChange}
                       className={`w-full px-4 py-2 border rounded-lg ${
-                        errors.phone ? 'border-red-500' : 'border-gray-300 focus:border-[#D4AF37]'
+                        errors.phone
+                          ? "border-red-500"
+                          : "border-gray-300 focus:border-[#D4AF37]"
                       } focus:ring-2 focus:ring-[#D4AF37]`}
                       placeholder="10 digit number"
                     />
-                    {errors.phone && <p className="mt-1 text-sm text-red-500">{errors.phone}</p>}
+                    {errors.phone && (
+                      <p className="mt-1 text-sm text-red-500">
+                        {errors.phone}
+                      </p>
+                    )}
                   </div>
 
                   {/* Checkbox */}
@@ -203,11 +226,14 @@ const LeadCaptureModal: React.FC = () => {
                       checked={formData.agreed}
                       onChange={handleChange}
                       className={`w-4 h-4 mt-1 rounded ${
-                        errors.agreed ? 'border-red-500' : 'border-gray-300'
+                        errors.agreed ? "border-red-500" : "border-gray-300"
                       } text-[#D4AF37] focus:ring-[#D4AF37]`}
                     />
-                    <label htmlFor="agreed" className="ml-2 block text-sm text-gray-700">
-                      I agree to the{' '}
+                    <label
+                      htmlFor="agreed"
+                      className="ml-2 block text-sm text-gray-700"
+                    >
+                      I agree to the{" "}
                       <a
                         href="/terms"
                         className="text-[#D4AF37] hover:underline"
@@ -215,11 +241,15 @@ const LeadCaptureModal: React.FC = () => {
                         rel="noopener noreferrer"
                       >
                         Terms & Conditions
-                      </a>{' '}
+                      </a>{" "}
                       *
                     </label>
                   </div>
-                  {errors.agreed && <p className="text-sm text-red-500 -mt-2">{errors.agreed}</p>}
+                  {errors.agreed && (
+                    <p className="text-sm text-red-500 -mt-2">
+                      {errors.agreed}
+                    </p>
+                  )}
 
                   {/* Submit */}
                   <button
@@ -252,7 +282,7 @@ const LeadCaptureModal: React.FC = () => {
                         Processing...
                       </>
                     ) : (
-                      'Get Priority Access'
+                      "Get Priority Access"
                     )}
                   </button>
                 </div>

@@ -33,9 +33,7 @@ export const rooms = [
     price: 21999,
     description: "A cozy single room with all basic amenities.",
     amenities: ["Attached Bathroom", "Study Table", "Single Bed", "Wardrobe"],
-    imageUrl: [
-      "/images/1.jpg",
-    ],
+    imageUrl: ["/images/1.jpg"],
     images: [
       "/images/1.jpg",
       "/images/2.jpg",
@@ -60,8 +58,7 @@ export const rooms = [
       "2 Single Beds",
       "2 Wardrobes",
     ],
-    imageUrl:
-      "/images/4.jpg",
+    imageUrl: "/images/4.jpg",
     images: [
       "/images/4.jpg",
       "/images/7.jpg",
@@ -89,9 +86,7 @@ export const rooms = [
       "3 Meals/Day",
       "Personal TV",
     ],
-    imageUrl: [
-      "/images/3.jpg",
-    ],
+    imageUrl: ["/images/3.jpg"],
     images: [
       "/images/1.jpg",
       "/images/2.jpg",
@@ -274,23 +269,20 @@ export function RoomsPage() {
     console.log("Room ID being sent:", selectedRoom?.id);
 
     try {
-      const response = await fetch(
-        "https://inaraliving-in.onrender.com/api/booking",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            roomId: selectedRoom?.id ?? "",
-            roomName: selectedRoom?.name ?? "",
-            roomPrice: selectedRoom?.price ?? 0,
-            userName,
-            userPhone,
-            moveInDate,
-            transactionId,
-            totalAmount, // Send the calculated total amount to the backend
-          }),
-        }
-      );
+      const response = await fetch("http://localhost:500/api/booking", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          roomId: selectedRoom?.id ?? "",
+          roomName: selectedRoom?.name ?? "",
+          roomPrice: selectedRoom?.price ?? 0,
+          userName,
+          userPhone,
+          moveInDate,
+          transactionId,
+          totalAmount, // Send the calculated total amount to the backend
+        }),
+      });
 
       if (response.ok) {
         toast.success(
