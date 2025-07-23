@@ -1055,7 +1055,7 @@ export function AdminDashboardPage() {
                                 onClick={() => markAsUncontacted(inquiry._id)}
                                 className="text-yellow-600 hover:text-yellow-800 mr-3"
                               >
-                                Uncontact
+                                Unmark as Contacted
                               </button>
                             ) : (
                               <button
