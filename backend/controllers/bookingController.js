@@ -50,3 +50,19 @@ export const submitBooking = async (req, res) => {
     res.status(500).json({ message: "Failed to submit booking request." });
   }
 };
+
+// controllers/bookingController.js
+export const updateBookingStatus = async (req, res) => {
+  try {
+    const { status } = req.body;
+    const booking = await Booking.findByIdAndUpdate(
+      req.params.id,
+      { status },
+      { new: true }
+    );
+    if (!booking) return res.status(404).json({ message: "Booking not found" });
+    res.json(booking);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

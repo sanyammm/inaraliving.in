@@ -410,26 +410,57 @@ export function AdminDashboardPage() {
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
 
-  const markAsContacted = (inquiryId: string) => {
-    setInquiries((prev) =>
-      prev.map((inquiry) =>
-        inquiry._id === inquiryId
-          ? { ...inquiry, status: "contacted" }
-          : inquiry
-      )
-    );
-    // Here you would typically also make an API call to update the status
+  const updateInquiryStatus = async (
+    inquiryId: string,
+    status: "contacted" | "pending"
+  ) => {
+    try {
+      await fetch(
+        `https://inaraliving-in.onrender.com/api/inquiry/${inquiryId}/status`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ status }),
+        }
+      );
+      setInquiries((prev) =>
+        prev.map((inquiry) =>
+          inquiry._id === inquiryId ? { ...inquiry, status } : inquiry
+        )
+      );
+    } catch {
+      alert("Failed to update inquiry status.");
+    }
   };
 
-  const confirmBooking = (bookingId: string) => {
-    setBookings((prev) =>
-      prev.map((booking) =>
-        booking._id === bookingId
-          ? { ...booking, status: "Completed" }
-          : booking
-      )
-    );
-    // Here you would typically also make an API call to update the status
+  const markAsContacted = (inquiryId: string) => {
+    updateInquiryStatus(inquiryId, "contacted");
+  };
+
+  const markAsUncontacted = (inquiryId: string) => {
+    updateInquiryStatus(inquiryId, "pending");
+  };
+
+  const confirmBooking = async (bookingId: string) => {
+    try {
+      await fetch(
+        `https://inaraliving-in.onrender.com/api/booking/${bookingId}/status`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ status: "Completed" }),
+        }
+      );
+      setBookings((prev) =>
+        prev.map((booking) =>
+          booking._id === bookingId
+            ? { ...booking, status: "Completed" }
+            : booking
+        )
+      );
+    } catch {
+      alert("Failed to confirm booking.");
+    }
   };
 
   const openWhatsApp = (phone: string, userName: string) => {
@@ -1018,15 +1049,21 @@ export function AdminDashboardPage() {
                             </span>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <button
-                              onClick={() => markAsContacted(inquiry._id)}
-                              className="text-[#4f46e5] hover:text-[#4338ca] mr-3"
-                              disabled={inquiry.status === "contacted"}
-                            >
-                              {inquiry.status === "contacted"
-                                ? "Contacted"
-                                : "Mark as Contacted"}
-                            </button>
+                            {inquiry.status === "contacted" ? (
+                              <button
+                                onClick={() => markAsUncontacted(inquiry._id)}
+                                className="text-yellow-600 hover:text-yellow-800 mr-3"
+                              >
+                                Uncontact
+                              </button>
+                            ) : (
+                              <button
+                                onClick={() => markAsContacted(inquiry._id)}
+                                className="text-[#4f46e5] hover:text-[#4338ca] mr-3"
+                              >
+                                Mark as Contacted
+                              </button>
+                            )}
                             <button
                               onClick={() =>
                                 openWhatsApp(inquiry.phone, inquiry.name)
