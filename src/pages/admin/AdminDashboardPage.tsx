@@ -464,12 +464,13 @@ export function AdminDashboardPage() {
   };
 
   const openWhatsApp = (phone: string, userName: string) => {
+    let formattedPhone = phone.replace(/\D/g, "");
+    if (!formattedPhone.startsWith("91")) {
+      formattedPhone = "91" + formattedPhone; // Default to India country code
+    }
     const message = `Hi ${userName},\n\nYour booking with Inara Living has been confirmed. Thank you for choosing us!\n\nBest regards,\nInara Living Team`;
     const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/${phone.replace(
-      /\D/g,
-      ""
-    )}?text=${encodedMessage}`;
+    const whatsappUrl = `https://wa.me/${formattedPhone}?text=${encodedMessage}`;
     window.open(whatsappUrl, "_blank");
   };
 
