@@ -4,6 +4,7 @@ const InquirySchema = new mongoose.Schema({
   name: String,
   phone: String,
   message: String,
+  status: { type: String, default: "pending" }, // Default status is 'pending'
   createdAt: {
     type: Date,
     default: Date.now,
