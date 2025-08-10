@@ -30,7 +30,7 @@ export const rooms = [
     id: "1",
     name: "Solo Luxe",
     type: "single",
-    price: 32999,
+    price: 24999,
     description: "A cozy single room with all basic amenities.",
     amenities: ["Attached Bathroom", "Study Table", "Single Bed", "Wardrobe"],
     imageUrl: ["/images/1.jpg"],

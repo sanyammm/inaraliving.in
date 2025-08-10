@@ -145,8 +145,8 @@ export function PricingPage() {
           {[
             {
               type: "Solo Luxe",
-              price: 32999,
-              originalPrice: 22999,
+              price: 24999,
+              originalPrice: 26999,
               features: [
                 {
                   name: "Single Bed",
@@ -189,7 +189,7 @@ export function PricingPage() {
             {
               type: "Twin Deluxe",
               price: 21999,
-              originalPrice: 21999,
+              originalPrice: 22999,
               features: [
                 {
                   name: "2 Single Beds",
@@ -232,7 +232,7 @@ export function PricingPage() {
             {
               type: "Premium Suite",
               price: 32999,
-              originalPrice: 27999,
+              originalPrice: 36999,
               features: [
                 {
                   name: "King Size Bed",

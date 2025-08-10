@@ -3,15 +3,15 @@ import { motion } from "framer-motion";
 
 // Image sources
 const images = [
-  "/images/menuinara-1.png", //0 Inara Ki Rasoi (Kitchen Name)
-  "/images/menuinara-2.png", //1 Kitchen Instructions
-  "/images/menuinara-3.png", //2 Sunday
-  "/images/menuinara-4.png", //3 Monday
-  "/images/menuinara-5.png", //4 Tuesday
-  "/images/menuinara-6.png", //5 Wednesday
-  "/images/menuinara-7.png", //6 Thursday
-  "/images/menuinara-8.png", //7 Friday
-  "/images/menuinara-9.png", //8 Saturday
+  "/images/menuinara-1.webp", //0 Inara Ki Rasoi (Kitchen Name)
+  "/images/menuinara-2.webp", //1 Kitchen Instructions
+  "/images/menuinara-3.webp", //2 Sunday
+  "/images/menuinara-4.webp", //3 Monday
+  "/images/menuinara-5.webp", //4 Tuesday
+  "/images/menuinara-6.webp", //5 Wednesday
+  "/images/menuinara-7.webp", //6 Thursday
+  "/images/menuinara-8.webp", //7 Friday
+  "/images/menuinara-9.webp", //8 Saturday
 ];
 
 const weeklyMeals = {
